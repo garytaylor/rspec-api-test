@@ -13,18 +13,20 @@ class RSpecAPITest
   module HTTPHelpers
     class JSONHashResponse < DelegateClass(Hash)
       attr_reader :code, :headers
-      def initialize(hash, code, headers)
+      def initialize(hash, code, headers, cookies)
         @code = code
         @headers = headers
+        @cookies = cookies
         super(hash.with_indifferent_access)
       end
     end
 
     class JSONArrayResponse < DelegateClass(Array)
       attr_reader :code, :headers
-      def initialize(array, code, headers)
+      def initialize(array, code, headers, cookies)
         @code = code
         @headers = headers
+        @cookies = cookies
         super(array)
       end
     end
@@ -50,7 +52,7 @@ class RSpecAPITest
         response = request(*out)
         begin 
           json = JSON.parse(response)
-          classes[json.class].new(json, response.code, response.headers)
+          classes[json.class].new(json, response.code, response.headers, response.cookies)
         rescue JSON::ParserError
           response
         end
