@@ -12,7 +12,7 @@ class RSpecAPITest
 
   module HTTPHelpers
     class JSONHashResponse < DelegateClass(Hash)
-      attr_reader :code, :headers
+      attr_reader :code, :headers, :cookies
       def initialize(hash, code, headers, cookies)
         @code = code
         @headers = headers
@@ -22,7 +22,7 @@ class RSpecAPITest
     end
 
     class JSONArrayResponse < DelegateClass(Array)
-      attr_reader :code, :headers
+      attr_reader :code, :headers, :cookies
       def initialize(array, code, headers, cookies)
         @code = code
         @headers = headers
